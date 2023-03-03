@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script>
+        let Customers = [ 
+          { 
+           name: "John", 
+           age: 7, 
+           image: "https://image.com/4221" 
+
+           }, 
+           {
+            name: "Max", 
+            age: 8, 
+            image: "https://image.com/4221" 
+           }, 
+           { 
+            name: "Jerry", 
+            age: 9, 
+            image: "https://image.com/4221" 
+           } 
+          ];
+        function Customer(){
+          for(let i=0;Customers[i]!=undefined;i++){
+            let tr = document.createElement('tr');
+            let Name = document.createElement('td')
+            Name.innerText= Customers[i].name
+            let Age = document.createElement('td')
+            Age.innerText= Customers[i].age
+            let Image = document.createElement('td')
+            Image.innerText= Customers[i].image
+
+            tr.append(Name,Age,Image);
+  
+            let tableelement= document.getElementById("CustomersTable")
+            tableelement.append(tr);
+
+
+          }
+        }
+   
+        function sort() {
+          let table, rows, switching, i, x, y, shouldSwitch;
+          table = document.getElementById("CustomersTable");
+          switching = true;
+          while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("td")[1];
+            y = rows[i + 1].getElementsByTagName("td")[1];
+              if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                shouldSwitch = true;
+                break;
+              }
+            }
+            if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            }
+          }
+        }
+
+        // function Searchable() {
+        //   let table,tr, txtvalue,input;
+        //   input =document.getElementById('search')
+        //   filter = input.value.toUpperCase();
+        //   table = document.getElementById("CustomersTable");
+        //   tr = table.getElementsByTagName("tr");
+
+        //   for (i = 1; i < tr.length; i++) {
+        //     txtValue = tr[i].childNodes[0].innerHTML;
+        //     if (txtValue.toUpperCase().indexOf(filter) == -1) {
+        //       tr[i].style.display = "none";
+        //     }
+        //   }
+        // }
+
+        function searchable(){
+        let name = document.getElementById("name").value.toUpperCase();
+        let result =[];
+        let i;
+        for(i=0;i < Customers.length;i++){
+          if(name!==''&& Customers[i]["name"].toUpperCase().indexOf(name)!== -1){
+            result.push(Customers[i]);
+          }
+        }
+        if(result.length > 0){
+          console.log(result[0]);
+        }else{
+          console.log("not found");
+        }
+        return result;
+      };
+      </script>
+      <style>
+        td,th{
+          text-align: center;
+          padding: 15px;
+          border: 1px solid black;
+        }
+
+        CustomersTable{
+        margin: auto;
+        }
+      </style>
+  </head>
+  <body>
+      <h2> Question 2: You are provided the following Array of object:</h2>
+      <label>search</label>
+      <input type="search" id="name">
+      <button id="search" onClick="searchable()">search</button>
+      <button onclick="sort()">Sort</button>
+     <table id="CustomersTable">
+       <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Image</th>
+       </tr>
+     </table>
+  </body>
+</html>
